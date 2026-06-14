@@ -25,11 +25,52 @@ body {
     font-size: 2rem;
 }
 
+/* Header: Buttons Section */
+
 button {
   padding: 0.2rem 0.5rem;
+  border-radius: 5px;
   font-family: monospace;
+  transition-duration: 0.1s;
+  cursor: pointer;
 }
 
+button:active {
+  background-color: #30304F;;
+  transform: scale(0.95);
+}
+
+.bttn-set-size {
+  background-color: #8888DB;
+}
+
+.bttn-set-size:active {
+  background-color: #54549C;
+  border: #30304F  2px solid;
+}
+
+.bttn-solid-color {
+  background-color: #E86185;
+}
+
+.bttn-solid-color:active {
+  background-color: #AD3454;
+  border: #AD3454  2px solid;
+}
+
+.bttn-random-color {
+  background-color: #D986D3;
+}
+
+.bttn-random-color:active {
+  background-color: #874D83;
+  border: #874D83 2px solid;
+}
+
+.bttn-clean:active {
+  background-color: #9C9C9C;
+  border: #9C9C9C 2px solid;
+}
 
 /* Sketch Section */
 
