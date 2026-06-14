@@ -1,0 +1,24 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #1f1b1b;
+    font-family: monospace;
+    color: white;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+}
+
+.header__title {
+    margin-top: 2%;
+    font-size: 2rem;
+}
