@@ -129,5 +129,6 @@ button:active {
 
 .square:hover {
   transform: scale(1.15);
+  border: none;
   box-shadow: 0 0.25rem 2rem 0 #ABABAB;
 }
