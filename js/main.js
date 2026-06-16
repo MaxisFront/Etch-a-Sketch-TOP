@@ -12,6 +12,7 @@
   const buttons = document.querySelectorAll('button');
   const colorPicker =  /** @type {HTMLInputElement} */ (document.querySelector('[data-option="pick-color"]'))
 
+  // Initial Setup
   updateGridSize(16);
 
 
