@@ -4,12 +4,13 @@
   
   // Global variable
   let currentColoringType = "solid";
-  let baseSquareColor = "93, 75, 209";
-  let rightClickDown = false;
+  let baseSquareColor = "61, 53, 117";
+  let leftClickDown = false;
 
   // DOM nodes
   const sketchGrid = document.querySelector('[data-sketch="grid"]');
   const buttons = document.querySelectorAll('button');
+  const colorPicker =  /** @type {HTMLInputElement} */ (document.querySelector('[data-option="pick-color"]'))
 
   updateGridSize(16);
 
@@ -44,6 +45,14 @@
   /** @param {string} type  */
   function setColoringType(type) {
     currentColoringType = type;
+
+    let colorInput = colorPicker.style;
+
+    if (type === "random") {
+      colorInput.display = "none";
+    } else if (type === "solid") {
+      colorInput.display = "inline-block";
+    }
   }
 
   /** @param {HTMLElement} square  */
@@ -60,6 +69,17 @@
     }
   }
 
+  /** @param {HTMLElement} eventTarget  */
+  function setBrushType(eventTarget) {
+
+    if (currentColoringType === "solid") {
+      applyProgressiveColor(eventTarget);
+      
+    } else if (currentColoringType === "random") {
+      applyRandomColor(eventTarget);
+    }
+  }
+
   /** @param {HTMLElement} square  */
   function applyRandomColor(square) {
 
@@ -68,9 +88,9 @@
 
   function getRandomColor() {
 
-    const R = Math.floor(Math.random() * 255);
-    const G = Math.floor(Math.random() * 255);
-    const B = Math.floor(Math.random() * 255);
+    const R = Math.floor(Math.random() * 256);
+    const G = Math.floor(Math.random() * 256);
+    const B = Math.floor(Math.random() * 256);
 
     const randomcolor = `${R}, ${G}, ${B}, 1`;
     return randomcolor;
@@ -87,6 +107,7 @@
       delete square.dataset.opacity;
       });
     }
+
 
   // Square logic
 
@@ -131,35 +152,42 @@
 
   // Square interaction logic
   sketchGrid?.addEventListener("mousedown", (event) => {
+
+    if (event.button !== 0) return;
+
     const target = /** @type {HTMLElement} */ (event.target);
 
     if (!target || !target.classList.contains("square")) return;
 
-    rightClickDown = true;
-
-    if (currentColoringType === "solid") {
-      applyProgressiveColor(target);
-    
-    } else if (currentColoringType == "random") {
-      applyRandomColor(target);
-    }
+    leftClickDown = true;
+    setBrushType(target);
   })
 
+  // EventListeners
   sketchGrid?.addEventListener(("mouseover"), (event) => {
     
     const target = /** @type {HTMLElement} */ (event.target);
 
-    if (!target || !target.classList.contains("square") || !rightClickDown) return;
+    if (!target || !target.classList.contains("square") || !leftClickDown) return;
+  
+    setBrushType(target);
 
-    if (currentColoringType === "solid") {
-      applyProgressiveColor(target);
-    } else if (currentColoringType == "random") {
-      applyRandomColor(target);
-    }
   })
 
   window.addEventListener("mouseup", () => {
-    rightClickDown = false;
+    leftClickDown = false;
   })
+
+  colorPicker?.addEventListener("input", (event) => {
+    const target = /** @type {HTMLInputElement} */ (event.target);
+    const hexColor = target.value;
+
+    const R = parseInt(hexColor.substring(1, 3), 16);
+    const G = parseInt(hexColor.substring(3, 5), 16);
+    const B = parseInt(hexColor.substring(5, 7), 16);
+
+    baseSquareColor = `${R}, ${G}, ${B}`;
+  });
+
 
 })();
